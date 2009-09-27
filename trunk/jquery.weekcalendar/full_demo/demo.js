@@ -17,7 +17,7 @@ $(document).ready(function() {
       eventRender : function(calEvent, $event) {
          if (calEvent.end.getTime() < new Date().getTime()) {
             $event.css("backgroundColor", "#aaa");
-            $event.find(".time").css({
+            $event.find(".wc-time").css({
                "backgroundColor" : "#999",
                "border" : "1px solid #888"
             });

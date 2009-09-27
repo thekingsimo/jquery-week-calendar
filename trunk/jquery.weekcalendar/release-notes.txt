@@ -6,6 +6,10 @@
 - Fixed bug where calendar was not honouring the allowCalEventOverlap = false option when creating new or updating events from dialog (Issue 84)
 - Added 'daysToShow' config option to optionally only display a limited number of days in a week. (thanks jura khrapunov)
 - Made change that prevents dragged events fro being resized when the event has resizing disabled and overlapping is switched off. (Issue 70)
+- Added proper scoping of css to the calendar using 'wc' prefix for all class names.
+
+
+Once again, thanks for all contributions, suggestions and help in the google group!
 
 
 1.2.1 
@@ -19,6 +23,7 @@
 - Hovering over overlapping events brings them into focus (thanks Roderik)
 - Added methods for formatting dates and times using the calendar config or by passing in date / time formats.
 - Modified logic for 'scrollToTime' to scroll to the time of the reference date of the week.
+
 
 
 

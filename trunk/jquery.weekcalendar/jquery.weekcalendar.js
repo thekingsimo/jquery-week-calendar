@@ -99,7 +99,7 @@
 
          var self = this;
 
-         self.element.find(".cal-event").each(function() {
+         self.element.find(".wc-cal-event").each(function() {
             if ($(this).data("calEvent").id === eventId) {
                $(this).remove();
                return false;
@@ -107,7 +107,7 @@
          });
          
          //this could be more efficient rather than running on all days regardless...
-         self.element.find(".day-column-inner").each(function(){
+         self.element.find(".wc-day-column-inner").each(function(){
             self._adjustOverlappingEvents($(this));
          });
       },
@@ -120,12 +120,12 @@
 
          var self = this;
 
-         self.element.find(".new-cal-event").each(function() {
+         self.element.find(".wc-new-cal-event").each(function() {
             $(this).remove();
          });
          
          //this could be more efficient rather than running on all days regardless...
-         self.element.find(".day-column-inner").each(function(){
+         self.element.find(".wc-day-column-inner").each(function(){
             self._adjustOverlappingEvents($(this));
          });
       },
@@ -211,9 +211,9 @@
          var options = this.options;
          if (options && $.isFunction(options.height)) {
             var calendarHeight = options.height(this.element);
-            var headerHeight = this.element.find(".week-calendar-header").outerHeight();
-            var navHeight = this.element.find(".calendar-nav").outerHeight();
-            this.element.find(".calendar-scrollable-grid").height(calendarHeight - navHeight - headerHeight);
+            var headerHeight = this.element.find(".wc-header").outerHeight();
+            var navHeight = this.element.find(".wc-nav").outerHeight();
+            this.element.find(".wc-scrollable-grid").height(calendarHeight - navHeight - headerHeight);
          }
       },
 
@@ -229,9 +229,9 @@
             if ($target.data("preventClick")) {
                return;
             }
-            if ($target.hasClass("cal-event")) {
+            if ($target.hasClass("wc-cal-event")) {
                options.eventClick($target.data("calEvent"), $target, event);
-            } else if ($target.parent().hasClass("cal-event")) {
+            } else if ($target.parent().hasClass("wc-cal-event")) {
                options.eventClick($target.parent().data("calEvent"), $target.parent(), event);
             }
          }).mouseover(function(event) {
@@ -241,7 +241,7 @@
                return;
             }
 
-            if ($target.hasClass("cal-event")) {
+            if ($target.hasClass("wc-cal-event")) {
                options.eventMouseover($target.data("calEvent"), $target, event);
             }
          }).mouseout(function(event) {
@@ -249,7 +249,7 @@
             if (self._isDraggingOrResizing($target)) {
                return;
             }
-            if ($target.hasClass("cal-event")) {
+            if ($target.hasClass("wc-cal-event")) {
                if ($target.data("sizing")) return;
                options.eventMouseout($target.data("calEvent"), $target, event);
 
@@ -273,28 +273,28 @@
          var self = this;
          var options = this.options;
 
-         $calendarContainer = $("<div class=\"week-calendar\">").appendTo(self.element);
+         $calendarContainer = $("<div class=\"wc-container\">").appendTo(self.element);
 
          if (options.buttons) {
-            calendarNavHtml = "<div class=\"calendar-nav\">\
-                    <button class=\"today\">" + options.buttonText.today + "</button>\
-                    <button class=\"prev\">" + options.buttonText.lastWeek + "</button>\
-                    <button class=\"next\">" + options.buttonText.nextWeek + "</button>\
+            calendarNavHtml = "<div class=\"wc-nav\">\
+                    <button class=\"wc-today\">" + options.buttonText.today + "</button>\
+                    <button class=\"wc-prev\">" + options.buttonText.lastWeek + "</button>\
+                    <button class=\"wc-next\">" + options.buttonText.nextWeek + "</button>\
                     </div>";
 
             $(calendarNavHtml).appendTo($calendarContainer);
 
-            $calendarContainer.find(".calendar-nav .today").click(function() {
+            $calendarContainer.find(".wc-nav .wc-today").click(function() {
                self.element.weekCalendar("today");
                return false;
             });
 
-            $calendarContainer.find(".calendar-nav .prev").click(function() {
+            $calendarContainer.find(".wc-nav .wc-prev").click(function() {
                self.element.weekCalendar("prevWeek");
                return false;
             });
 
-            $calendarContainer.find(".calendar-nav .next").click(function() {
+            $calendarContainer.find(".wc-nav .wc-next").click(function() {
                self.element.weekCalendar("nextWeek");
                return false;
             });
@@ -302,42 +302,42 @@
          }
 
          //render calendar header
-         calendarHeaderHtml = "<table class=\"week-calendar-header\"><tbody><tr><td class=\"time-column-header\"></td>";
+         calendarHeaderHtml = "<table class=\"wc-header\"><tbody><tr><td class=\"wc-time-column-header\"></td>";
          for (var i = 1; i <= options.daysToShow; i++) {
-            calendarHeaderHtml += "<td class=\"day-column-header day-" + i + "\"></td>";
+            calendarHeaderHtml += "<td class=\"wc-day-column-header wc-day-" + i + "\"></td>";
          }
-         calendarHeaderHtml += "<td class=\"scrollbar-shim\"></td></tr></tbody></table>";
+         calendarHeaderHtml += "<td class=\"wc-scrollbar-shim\"></td></tr></tbody></table>";
 
          //render calendar body
-         calendarBodyHtml = "<div class=\"calendar-scrollable-grid\">\
-                <table class=\"week-calendar-time-slots\">\
+         calendarBodyHtml = "<div class=\"wc-scrollable-grid\">\
+                <table class=\"wc-time-slots\">\
                 <tbody>\
                 <tr>\
-                <td class=\"grid-timeslot-header\"></td>\
+                <td class=\"wc-grid-timeslot-header\"></td>\
                 <td colspan=\"" + options.daysToShow + "\">\
-                <div class=\"time-slot-wrapper\">\
-                <div class=\"time-slots\">";
+                <div class=\"wc-time-slot-wrapper\">\
+                <div class=\"wc-time-slots\">";
 
          var start = options.businessHours.limitDisplay ? options.businessHours.start : 0;
          var end = options.businessHours.limitDisplay ? options.businessHours.end : 24;
 
          for (var i = start; i < end; i++) {
             for (var j = 0; j < options.timeslotsPerHour - 1; j++) {
-               calendarBodyHtml += "<div class=\"time-slot\"></div>";
+               calendarBodyHtml += "<div class=\"wc-time-slot\"></div>";
             }
-            calendarBodyHtml += "<div class=\"time-slot hour-end\"></div>";
+            calendarBodyHtml += "<div class=\"wc-time-slot wc-hour-end\"></div>";
          }
 
-         calendarBodyHtml += "</div></div></td></tr><tr><td class=\"grid-timeslot-header\">";
+         calendarBodyHtml += "</div></div></td></tr><tr><td class=\"wc-grid-timeslot-header\">";
 
          for (var i = start; i < end; i++) {
 
-            var bhClass = (options.businessHours.start <= i && options.businessHours.end > i) ? "business-hours" : "";
-            calendarBodyHtml += "<div class=\"hour-header " + bhClass + "\">"
+            var bhClass = (options.businessHours.start <= i && options.businessHours.end > i) ? "wc-business-hours" : "";
+            calendarBodyHtml += "<div class=\"wc-hour-header " + bhClass + "\">"
             if (options.use24Hour) {
-               calendarBodyHtml += "<div class=\"time-header-cell\">" + self._24HourForIndex(i) + "</div>";
+               calendarBodyHtml += "<div class=\"wc-time-header-cell\">" + self._24HourForIndex(i) + "</div>";
             } else {
-               calendarBodyHtml += "<div class=\"time-header-cell\">" + self._hourForIndex(i) + "<span class=\"am-pm\">" + self._amOrPm(i) + "</span></div>";
+               calendarBodyHtml += "<div class=\"wc-time-header-cell\">" + self._hourForIndex(i) + "<span class=\"wc-am-pm\">" + self._amOrPm(i) + "</span></div>";
             }
             calendarBodyHtml += "</div>";
          }
@@ -345,7 +345,7 @@
          calendarBodyHtml += "</td>";
 
          for (var i = 1; i <= options.daysToShow; i++) {
-            calendarBodyHtml += "<td class=\"day-column day-" + i + "\"><div class=\"day-column-inner\"></div></td>"
+            calendarBodyHtml += "<td class=\"wc-day-column day-" + i + "\"><div class=\"wc-day-column-inner\"></div></td>"
          }
 
          calendarBodyHtml += "</tr></tbody></table></div>";
@@ -353,7 +353,7 @@
          //append all calendar parts to container
          $(calendarHeaderHtml + calendarBodyHtml).appendTo($calendarContainer);
 
-         $weekDayColumns = $calendarContainer.find(".day-column-inner");
+         $weekDayColumns = $calendarContainer.find(".wc-day-column-inner");
          $weekDayColumns.each(function(i, val) {
             $(this).height(options.timeslotHeight * options.timeslotsPerDay);
             if (!options.readonly) {
@@ -362,9 +362,9 @@
             }
          });
 
-         $calendarContainer.find(".time-slot").height(options.timeslotHeight - 1); //account for border
+         $calendarContainer.find(".wc-time-slot").height(options.timeslotHeight - 1); //account for border
 
-         $calendarContainer.find(".time-header-cell").css({
+         $calendarContainer.find(".wc-time-header-cell").css({
             height :  (options.timeslotHeight * options.timeslotsPerHour) - 11,
             padding: 5
          });
@@ -380,9 +380,9 @@
          var options = this.options;
          $weekDay.mousedown(function(event) {
             var $target = $(event.target);
-            if ($target.hasClass("day-column-inner")) {
+            if ($target.hasClass("wc-day-column-inner")) {
 
-               var $newEvent = $("<div class=\"cal-event new-cal-event new-cal-event-creating\"></div>");
+               var $newEvent = $("<div class=\"wc-cal-event wc-new-cal-event wc-new-cal-event-creating\"></div>");
 
                $newEvent.css({lineHeight: (options.timeslotHeight - 2) + "px", fontSize: (options.timeslotHeight / 2) + "px"});
                $target.append($newEvent);
@@ -414,8 +414,8 @@
          }).mouseup(function(event) {
             var $target = $(event.target);
 
-            var $weekDay = $target.closest(".day-column-inner");
-            var $newEvent = $weekDay.find(".new-cal-event-creating");
+            var $weekDay = $target.closest(".wc-day-column-inner");
+            var $newEvent = $weekDay.find(".wc-new-cal-event-creating");
 
             if ($newEvent.length) {
                //if even created from a single click only, default height
@@ -458,7 +458,7 @@
          self.element.data("startDate", weekStartDate);
          self.element.data("endDate", weekEndDate);
 
-         $weekDayColumns = self.element.find(".day-column-inner");
+         $weekDayColumns = self.element.find(".wc-day-column-inner");
 
          self._updateDayColumnHeader($weekDayColumns);
 
@@ -496,7 +496,7 @@
          var options = this.options;
          var currentDay = self._cloneDate(self.element.data("startDate"));
 
-         self.element.find(".week-calendar-header td.day-column-header").each(function(i, val) {
+         self.element.find(".wc-header td.wc-day-column-header").each(function(i, val) {
 
             var dayName = options.useShortDayNames ? options.shortDays[currentDay.getDay()] : options.longDays[currentDay.getDay()];
 
@@ -556,7 +556,7 @@
             if (updateLayout) {
                self.element.empty();
                self._renderCalendar();
-               $weekDayColumns = self.element.find(".week-calendar-time-slots .day-column-inner");
+               $weekDayColumns = self.element.find(".wc-time-slots .wc-day-column-inner");
                self._updateDayColumnHeader($weekDayColumns);
                self._resizeCalendar();
             }
@@ -598,10 +598,10 @@
 
          var eventClass, eventHtml, $calEvent, $modifiedEvent;
 
-         eventClass = calEvent.id ? "cal-event" : "cal-event new-cal-event";
+         eventClass = calEvent.id ? "wc-cal-event" : "wc-cal-event wc-new-cal-event";
          eventHtml = "<div class=\"" + eventClass + " ui-corner-all\">\
-                <div class=\"time ui-corner-all\"></div>\
-                <div class=\"title\"></div></div>";
+                <div class=\"wc-time ui-corner-all\"></div>\
+                <div class=\"wc-title\"></div></div>";
 
          $calEvent = $(eventHtml);
          $modifiedEvent = options.eventRender(calEvent, $calEvent);
@@ -666,7 +666,7 @@
        * Find groups of overlapping events
        */
       _groupOverlappingEventElements : function($weekDay) {
-         var $events = $weekDay.find(".cal-event:visible");
+         var $events = $weekDay.find(".wc-cal-event:visible");
          var sortedEvents = $events.sort(function(a, b) {
             return $(a).data("calEvent").start.getTime() - $(b).data("calEvent").start.getTime();
          });
@@ -739,15 +739,15 @@
          self._cleanEvent(calEvent);
 
          if (calEvent.id) {
-            self.element.find(".cal-event").each(function() {
-               if ($(this).data("calEvent").id === calEvent.id || $(this).hasClass("new-cal-event")) {
+            self.element.find(".wc-cal-event").each(function() {
+               if ($(this).data("calEvent").id === calEvent.id || $(this).hasClass("wc-new-cal-event")) {
                   $(this).remove();
                   return false;
                }
             });
          }
 
-         var $weekDay = self._findWeekDayForEvent(calEvent, self.element.find(".week-calendar-time-slots .day-column-inner"));
+         var $weekDay = self._findWeekDayForEvent(calEvent, self.element.find(".wc-time-slots .wc-day-column-inner"));
          if ($weekDay) {
             var $calEvent = self._renderEvent(calEvent, $weekDay);
             self._adjustForEventCollisions($weekDay, $calEvent, calEvent, calEvent);
@@ -803,7 +803,7 @@
          var adjustedStart, adjustedEnd;
          var self = this;
 
-         $weekDay.find(".cal-event").not($calEvent).each(function() {
+         $weekDay.find(".wc-cal-event").not($calEvent).each(function() {
             var currentCalEvent = $(this).data("calEvent");
 
             //has been dropped onto existing event overlapping the end time
@@ -858,10 +858,10 @@
       _addDraggableToCalEvent : function(calEvent, $calEvent) {
          var self = this;
          var options = this.options;
-         var $weekDay = self._findWeekDayForEvent(calEvent, self.element.find(".week-calendar-time-slots .day-column-inner"));
+         var $weekDay = self._findWeekDayForEvent(calEvent, self.element.find(".wc-time-slots .wc-day-column-inner"));
          $calEvent.draggable({
-            handle : ".time",
-            containment: ".calendar-scrollable-grid",
+            handle : ".wc-time",
+            containment: ".wc-scrollable-grid",
             revert: 'valid',
             opacity: 0.5,
             grid : [$calEvent.outerWidth() + 1, options.timeslotHeight ],
@@ -881,7 +881,7 @@
          var self = this;
          var options = this.options;
          $weekDay.droppable({
-            accept: ".cal-event",
+            accept: ".wc-cal-event",
             drop: function(event, ui) {
                var $calEvent = ui.draggable;
                var top = Math.round(parseInt(ui.position.top));
@@ -889,7 +889,7 @@
                var calEvent = $calEvent.data("calEvent");
                var newCalEvent = $.extend(true, {start: eventDuration.start, end: eventDuration.end}, calEvent);
                self._adjustForEventCollisions($weekDay, $calEvent, newCalEvent, calEvent, true);
-               var $weekDayColumns = self.element.find(".day-column-inner");
+               var $weekDayColumns = self.element.find(".wc-day-column-inner");
                var $newEvent = self._renderEvent(newCalEvent, self._findWeekDayForEvent(newCalEvent, $weekDayColumns));
                $calEvent.hide();
 
@@ -897,7 +897,7 @@
                options.eventDrop(newCalEvent, calEvent, $newEvent);
                $calEvent.data("preventClick", true);
 
-               var $weekDayOld = self._findWeekDayForEvent($calEvent.data("calEvent"), self.element.find(".week-calendar-time-slots .day-column-inner"));
+               var $weekDayOld = self._findWeekDayForEvent($calEvent.data("calEvent"), self.element.find(".wc-time-slots .wc-day-column-inner"));
 
                if ($weekDayOld.data("startDate") != $weekDay.data("startDate")) {
                   self._adjustOverlappingEvents($weekDayOld);
@@ -950,8 +950,8 @@
       _refreshEventDetails : function(calEvent, $calEvent) {
          var self = this;
          var options = this.options;
-         $calEvent.find(".time").text(self._formatDate(calEvent.start, options.timeFormat) + options.timeSeparator + self._formatDate(calEvent.end, options.timeFormat));
-         $calEvent.find(".title").text(calEvent.title);
+         $calEvent.find(".wc-time").text(self._formatDate(calEvent.start, options.timeFormat) + options.timeSeparator + self._formatDate(calEvent.end, options.timeFormat));
+         $calEvent.find(".wc-title").text(calEvent.title);
          $calEvent.data("calEvent", calEvent);
       }
       ,
@@ -960,7 +960,7 @@
        * Clear all cal events from the calendar
        */
       _clearCalendar : function() {
-         this.element.find(".day-column-inner div").remove();
+         this.element.find(".wc-day-column-inner div").remove();
       }
       ,
 
@@ -970,7 +970,7 @@
       _scrollToHour : function(hour) {
          var self = this;
          var options = this.options;
-         var $scrollable = this.element.find(".calendar-scrollable-grid");
+         var $scrollable = this.element.find(".wc-scrollable-grid");
          var slot = hour;
          if (self.options.businessHours.limitDisplay) {
             if (hour < self.options.businessHours.start) {
@@ -980,7 +980,7 @@
             }
          }
 
-         var $target = this.element.find(".grid-timeslot-header .hour-header:eq(" + slot + ")");
+         var $target = this.element.find(".wc-grid-timeslot-header .wc-hour-header:eq(" + slot + ")");
 
          $scrollable.animate({scrollTop: 0}, 0, function() {
             var targetOffset = $target.offset().top;
