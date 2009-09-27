@@ -36,7 +36,7 @@ p {
 	text-align: center;
 }
 
-.week-calendar-header td {
+.wc-header td {
 	background: url(images/header-bg.png) repeat-x;
 }
 
