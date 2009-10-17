@@ -137,11 +137,11 @@ table.wc-time-slots {
 	padding-right: 10px;	
 }
 
-.wc-container-header .wc-today  {
+.wc-header .wc-today  {
 	font-weight: bold;
 }
 
-.wc-container-time-slots .wc-today {
+.wc-time-slots .wc-today {
 	background-color: #ffffcc;	
 }
 

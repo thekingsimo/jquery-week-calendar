@@ -502,9 +502,9 @@
 
             $(this).html(dayName + "<br/>" + self._formatDate(currentDay, options.dateFormat));
             if (self._isToday(currentDay)) {
-               $(this).addClass("today");
+               $(this).addClass("wc-today");
             } else {
-               $(this).removeClass("today");
+               $(this).removeClass("wc-today");
             }
             currentDay = self._addDays(currentDay, 1);
 
@@ -517,9 +517,9 @@
             $(this).data("startDate", self._cloneDate(currentDay));
             $(this).data("endDate", new Date(currentDay.getTime() + (MILLIS_IN_DAY)));
             if (self._isToday(currentDay)) {
-               $(this).parent().addClass("today");
+               $(this).parent().addClass("wc-today");
             } else {
-               $(this).parent().removeClass("today");
+               $(this).parent().removeClass("wc-today");
             }
 
             currentDay = self._addDays(currentDay, 1);
@@ -1159,7 +1159,7 @@
       ,
 
       _cloneDate : function(d) {
-         return new Date(+d);
+         return new Date(d.getTime());
       }
       ,
 
