@@ -7,6 +7,7 @@
 - Added 'daysToShow' config option to optionally only display a limited number of days in a week. (thanks jura khrapunov)
 - Made change that prevents dragged events fro being resized when the event has resizing disabled and overlapping is switched off. (Issue 70)
 - Added proper scoping of css to the calendar using 'wc' prefix for all class names.
+- Fixed problem with scrolling to hour if business hours are restricted
 
 
 Once again, thanks for all contributions, suggestions and help in the google group!

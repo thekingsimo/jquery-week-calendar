@@ -105,9 +105,9 @@
                return false;
             }
          });
-         
+
          //this could be more efficient rather than running on all days regardless...
-         self.element.find(".wc-day-column-inner").each(function(){
+         self.element.find(".wc-day-column-inner").each(function() {
             self._adjustOverlappingEvents($(this));
          });
       },
@@ -123,9 +123,9 @@
          self.element.find(".wc-new-cal-event").each(function() {
             $(this).remove();
          });
-         
+
          //this could be more efficient rather than running on all days regardless...
-         self.element.find(".wc-day-column-inner").each(function(){
+         self.element.find(".wc-day-column-inner").each(function() {
             self._adjustOverlappingEvents($(this));
          });
       },
@@ -727,8 +727,7 @@
             }
          });
          return $weekDay;
-      }
-      ,
+      },
 
       /*
        * update the events rendering in the calendar. Add if does not yet exist.
@@ -755,8 +754,7 @@
             self._positionEvent($weekDay, $calEvent);
             self._adjustOverlappingEvents($weekDay);
          }
-      }
-      ,
+      },
 
       /*
        * Position the event element within the weekday based on it's start / end dates.
@@ -771,8 +769,7 @@
          var pxTop = pxPerMillis * startMillis;
          var pxHeight = pxPerMillis * eventMillis;
          $calEvent.css({top: pxTop, height: pxHeight});
-      }
-      ,
+      },
 
       /*
        * Determine the actual start and end times of a calevent based on it's
@@ -785,8 +782,7 @@
          var start = new Date($weekDay.data("startDate").getTime() + startOffsetMillis + Math.round(top / options.timeslotHeight) * options.millisPerTimeslot);
          var end = new Date(start.getTime() + ($calEvent.height() / options.timeslotHeight) * options.millisPerTimeslot);
          return {start: start, end: end};
-      }
-      ,
+      },
 
       /*
        * If the calendar does not allow event overlap, adjust the start or end date if necessary to
@@ -849,8 +845,7 @@
          }
 
          $calEvent.data("calEvent", newCalEvent);
-      }
-      ,
+      },
 
       /*
        * Add draggable capabilities to an event
@@ -871,8 +866,7 @@
             }
          });
 
-      }
-      ,
+      },
 
       /*
        * Add droppable capabilites to weekdays to allow dropping of calEvents only
@@ -910,8 +904,7 @@
 
             }
          });
-      }
-      ,
+      },
 
       /*
        * Add resizable capabilities to a calEvent
@@ -941,8 +934,7 @@
                }, 500);
             }
          });
-      }
-      ,
+      },
 
       /*
        * Refresh the displayed details of a calEvent in the calendar
@@ -950,19 +942,17 @@
       _refreshEventDetails : function(calEvent, $calEvent) {
          var self = this;
          var options = this.options;
-         $calEvent.find(".wc-time").text(self._formatDate(calEvent.start, options.timeFormat) + options.timeSeparator + self._formatDate(calEvent.end, options.timeFormat));
-         $calEvent.find(".wc-title").text(calEvent.title);
+         $calEvent.find(".wc-time").html(self._formatDate(calEvent.start, options.timeFormat) + options.timeSeparator + self._formatDate(calEvent.end, options.timeFormat));
+         $calEvent.find(".wc-title").html(calEvent.title);
          $calEvent.data("calEvent", calEvent);
-      }
-      ,
+      },
 
       /*
        * Clear all cal events from the calendar
        */
       _clearCalendar : function() {
          this.element.find(".wc-day-column-inner div").remove();
-      }
-      ,
+      },
 
       /*
        * Scroll the calendar to a specific hour
@@ -973,11 +963,15 @@
          var $scrollable = this.element.find(".wc-scrollable-grid");
          var slot = hour;
          if (self.options.businessHours.limitDisplay) {
-            if (hour < self.options.businessHours.start) {
+            if (hour <= self.options.businessHours.start) {
                slot = 0;
             } else if (hour > self.options.businessHours.end) {
-               slot = self.options.businessHours.end - self.options.businessHours.start - 1;
+               slot = self.options.businessHours.end -
+               self.options.businessHours.start - 1;
+            } else {
+               slot = hour - self.options.businessHours.start;
             }
+            
          }
 
          var $target = this.element.find(".wc-grid-timeslot-header .wc-hour-header:eq(" + slot + ")");
@@ -987,8 +981,7 @@
             var scroll = targetOffset - $scrollable.offset().top - $target.outerHeight();
             $scrollable.animate({scrollTop: scroll}, options.scrollToHourMillis);
          });
-      }
-      ,
+      },
 
       /*
        * find the hour (12 hour day) for a given hour index
@@ -1001,8 +994,7 @@
          } else { //pm
             return index - 12;
          }
-      }
-      ,
+      },
 
       _24HourForIndex : function(index) {
          if (index === 0) { //midnight
@@ -1012,13 +1004,11 @@
          } else {
             return index + ":00";
          }
-      }
-      ,
+      },
 
       _amOrPm : function (hourOfDay) {
          return hourOfDay < 12 ? "AM" : "PM";
-      }
-      ,
+      },
 
       _isToday : function(date) {
          var clonedDate = this._cloneDate(date);
@@ -1026,8 +1016,7 @@
          var today = new Date();
          this._clearTime(today);
          return today.getTime() === clonedDate.getTime();
-      }
-      ,
+      },
 
       /*
        * Clean events to ensure correct format
@@ -1038,8 +1027,7 @@
             self._cleanEvent(event);
          });
          return events;
-      }
-      ,
+      },
 
       /*
        * Clean specific event
@@ -1053,8 +1041,7 @@
          if (!event.end) {
             event.end = this._addDays(this._cloneDate(event.start), 1);
          }
-      }
-      ,
+      },
 
       /*
        * Disable text selection of the elements in different browsers
@@ -1073,8 +1060,7 @@
                });
             }
          });
-      }
-      ,
+      },
 
       /*
        * returns the date on the first millisecond of the week
@@ -1085,8 +1071,7 @@
          var millisToSubtract = self._getAdjustedDayIndex(midnightCurrentDate) * 86400000;
          return new Date(midnightCurrentDate.getTime() - millisToSubtract);
 
-      }
-      ,
+      },
 
       /*
        * returns the date on the first millisecond of the last day of the week
@@ -1096,8 +1081,7 @@
          var midnightCurrentDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
          var millisToAdd = (6 - self._getAdjustedDayIndex(midnightCurrentDate)) * MILLIS_IN_DAY;
          return new Date(midnightCurrentDate.getTime() + millisToAdd);
-      }
-      ,
+      },
 
       /*
        * gets the index of the current day adjusted based on options
@@ -1109,8 +1093,7 @@
          var days = [0,1,2,3,4,5,6];
          this._rotate(days, this.options.firstDayOfWeek);
          return days[currentDayOfStandardWeek];
-      }
-      ,
+      },
 
       /*
        * returns the date on the last millisecond of the week
@@ -1119,8 +1102,7 @@
          var lastDayOfWeek = this._dateLastDayOfWeek(date);
          return new Date(lastDayOfWeek.getTime() + (MILLIS_IN_DAY));
 
-      }
-      ,
+      },
 
       /*
        * Clear the time components of a date leaving the date
@@ -1132,8 +1114,7 @@
          d.setSeconds(0);
          d.setMilliseconds(0);
          return d;
-      }
-      ,
+      },
 
       /*
        * add specific number of days to date
@@ -1144,8 +1125,7 @@
             return d;
          }
          return this._clearTime(d);
-      }
-      ,
+      },
 
       /*
        * Rotate an array by specified number of places.
@@ -1155,13 +1135,11 @@
             for (i = l; i > p; x = a[--i],a[i] = a[i - p],a[i - p] = x);
          }
          return a;
-      }
-      ,
+      },
 
       _cloneDate : function(d) {
          return new Date(d.getTime());
-      }
-      ,
+      },
 
       /*
        * return a date for different representations
@@ -1174,8 +1152,7 @@
             return new Date(d);
          }
          return d;
-      }
-      ,
+      },
 
       /*
        * date formatting is adapted from
@@ -1193,154 +1170,119 @@
             }
          }
          return returnStr;
-      }
-      ,
+      },
 
       _replaceChars : {
 
          // Day
          d: function(date) {
             return (date.getDate() < 10 ? '0' : '') + date.getDate();
-         }
-         ,
+         },
          D: function(date, options) {
             return options.shortDays[date.getDay()];
-         }
-         ,
+         },
          j: function(date) {
             return date.getDate();
-         }
-         ,
+         },
          l: function(date, options) {
             return options.longDays[date.getDay()];
-         }
-         ,
+         },
          N: function(date) {
             return date.getDay() + 1;
-         }
-         ,
+         },
          S: function(date) {
             return (date.getDate() % 10 == 1 && date.getDate() != 11 ? 'st' : (date.getDate() % 10 == 2 && date.getDate() != 12 ? 'nd' : (date.getDate() % 10 == 3 && date.getDate() != 13 ? 'rd' : 'th')));
-         }
-         ,
+         },
          w: function(date) {
             return date.getDay();
-         }
-         ,
+         },
          z: function(date) {
             return "Not Yet Supported";
-         }
-         ,
+         },
          // Week
          W: function(date) {
             return "Not Yet Supported";
-         }
-         ,
+         },
          // Month
          F: function(date, options) {
             return options.longMonths[date.getMonth()];
-         }
-         ,
+         },
          m: function(date) {
             return (date.getMonth() < 9 ? '0' : '') + (date.getMonth() + 1);
-         }
-         ,
+         },
          M: function(date, options) {
             return options.shortMonths[date.getMonth()];
-         }
-         ,
+         },
          n: function(date) {
             return date.getMonth() + 1;
-         }
-         ,
+         },
          t: function(date) {
             return "Not Yet Supported";
-         }
-         ,
+         },
          // Year
          L: function(date) {
             return "Not Yet Supported";
-         }
-         ,
+         },
          o: function(date) {
             return "Not Supported";
-         }
-         ,
+         },
          Y: function(date) {
             return date.getFullYear();
-         }
-         ,
+         },
          y: function(date) {
             return ('' + date.getFullYear()).substr(2);
-         }
-         ,
+         },
          // Time
          a: function(date) {
             return date.getHours() < 12 ? 'am' : 'pm';
-         }
-         ,
+         },
          A: function(date) {
             return date.getHours() < 12 ? 'AM' : 'PM';
-         }
-         ,
+         },
          B: function(date) {
             return "Not Yet Supported";
-         }
-         ,
+         },
          g: function(date) {
             return date.getHours() % 12 || 12;
-         }
-         ,
+         },
          G: function(date) {
             return date.getHours();
-         }
-         ,
+         },
          h: function(date) {
             return ((date.getHours() % 12 || 12) < 10 ? '0' : '') + (date.getHours() % 12 || 12);
-         }
-         ,
+         },
          H: function(date) {
             return (date.getHours() < 10 ? '0' : '') + date.getHours();
-         }
-         ,
+         },
          i: function(date) {
             return (date.getMinutes() < 10 ? '0' : '') + date.getMinutes();
-         }
-         ,
+         },
          s: function(date) {
             return (date.getSeconds() < 10 ? '0' : '') + date.getSeconds();
-         }
-         ,
+         },
          // Timezone
          e: function(date) {
             return "Not Yet Supported";
-         }
-         ,
+         },
          I: function(date) {
             return "Not Supported";
-         }
-         ,
+         },
          O: function(date) {
             return (date.getTimezoneOffset() < 0 ? '-' : '+') + (date.getTimezoneOffset() / 60 < 10 ? '0' : '') + (date.getTimezoneOffset() / 60) + '00';
-         }
-         ,
+         },
          T: function(date) {
             return "Not Yet Supported";
-         }
-         ,
+         },
          Z: function(date) {
             return date.getTimezoneOffset() * 60;
-         }
-         ,
+         },
          // Full Date/Time
          c: function(date) {
             return "Not Yet Supported";
-         }
-         ,
+         },
          r: function(date) {
             return date.toString();
-         }
-         ,
+         },
          U: function(date) {
             return date.getTime() / 1000;
          }
