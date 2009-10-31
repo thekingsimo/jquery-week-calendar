@@ -1,4 +1,4 @@
-1.2.2 (CURRENT DEV RELEASE)
+1.2.2 (2009-10-30)
 - Fixed inconsistent bug with dropping events in IE7/8 causing a js error
 - Updated the way that events that overlap are organised if using the overlapEventsSeperate option (thanks Yann)
 - Fixed bug where when resizing and overlapping events is enabled, the layout of overlapping of events wasn't being recalculated
