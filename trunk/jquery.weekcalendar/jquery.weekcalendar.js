@@ -1,5 +1,5 @@
 /*
- * jQuery.weekCalendar v1.2.2-pre
+ * jQuery.weekCalendar v1.2.2
  * http://www.redredred.com.au/
  *
  * Requires:
