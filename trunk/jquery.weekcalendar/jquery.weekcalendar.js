@@ -1,5 +1,5 @@
 /*
- * jQuery.weekCalendar v1.2.2
+ * jQuery.weekCalendar v1.2.3-pre
  * http://www.redredred.com.au/
  *
  * Requires:
@@ -884,11 +884,13 @@
                var newCalEvent = $.extend(true, {start: eventDuration.start, end: eventDuration.end}, calEvent);
                self._adjustForEventCollisions($weekDay, $calEvent, newCalEvent, calEvent, true);
                var $weekDayColumns = self.element.find(".wc-day-column-inner");
+
+                //trigger drop callback
+               options.eventDrop(newCalEvent, calEvent, $newEvent);
+
                var $newEvent = self._renderEvent(newCalEvent, self._findWeekDayForEvent(newCalEvent, $weekDayColumns));
                $calEvent.hide();
-
-               //trigger drop callback
-               options.eventDrop(newCalEvent, calEvent, $newEvent);
+              
                $calEvent.data("preventClick", true);
 
                var $weekDayOld = self._findWeekDayForEvent($calEvent.data("calEvent"), self.element.find(".wc-time-slots .wc-day-column-inner"));

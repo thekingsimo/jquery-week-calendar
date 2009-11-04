@@ -70,6 +70,7 @@ $(document).ready(function() {
 
       },
       eventDrop : function(calEvent, $event) {
+        
       },
       eventResize : function(calEvent, $event) {
       },
