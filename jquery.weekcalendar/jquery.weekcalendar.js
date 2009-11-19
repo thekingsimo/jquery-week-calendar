@@ -45,7 +45,6 @@
        * Refresh the events for the currently displayed week.
        */
       refresh : function() {
-         this._clearCalendar();
          this._loadCalEvents(this.element.data("startDate")); //reload with existing week
       },
 
@@ -531,6 +530,9 @@
        * Render the events into the calendar
        */
       _renderEvents : function (events, $weekDayColumns) {
+
+         this._clearCalendar();
+
          var self = this;
          var options = this.options;
          var eventsToRender;
