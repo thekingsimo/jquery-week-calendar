@@ -1,0 +1,1 @@
+# jQuery Week Calendar has been moved to [github](http://github.com/robmonie/jquery-week-calendar). #
